@@ -45,6 +45,18 @@
 #error This STM32 Do not support CAN or FDCAN
 #endif
 
+/* **🎯 CANopen 功能配置 - 重新啟用 LSS 和 LED (不是 stuff error 原因)** */
+/* 重新啟用 LSS 功能 - 與 CanOpenSTM32 保持一致 */
+#define CO_CONFIG_LSS (CO_CONFIG_LSS_SLAVE | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE)
+#define CO_CONFIG_LSS_SLAVE 0x01
+#define CO_CONFIG_LSS_SLAVE_FASTSCAN_DIRECT_RESPOND 0x02
+#define CO_CONFIG_LSS_MASTER 0x10
+
+/* 重新啟用 LED 功能 - 與 CanOpenSTM32 保持一致 */
+#define CO_CONFIG_LEDS (CO_CONFIG_LEDS_ENABLE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT)
+#define CO_CONFIG_LEDS_ENABLE 0x01
+
+/* 根據 CanOpenSTM32 的建議暫時禁用 Storage */
 #undef CO_CONFIG_STORAGE_ENABLE // We don't need Storage option, implement based on your use case and remove this line from here
 
 #ifdef CO_DRIVER_CUSTOM
